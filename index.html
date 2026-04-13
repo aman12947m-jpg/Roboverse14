@@ -84,7 +84,7 @@ function checkAnswer(selected){
 const correct=quizData[currentQuestion].correct;
 document.querySelectorAll('.quiz-option').forEach((btn,idx)=>{btn.disabled=true;btn.classList.add(idx===correct?'quiz-correct':idx===selected?'quiz-wrong':'');});
 if(selected===correct)quizScore++;
-setTimeout(()=>{currentQuestion++;currentQuestion<quizData.length?loadQuiz():showQuizResult();},2);
+setTimeout(()=>{currentQuestion++;currentQuestion<quizData.length?loadQuiz():showQuizResult();},Next);
 }
 function showQuizResult(){
 document.getElementById('quizContent').classList.add('hidden');
@@ -100,7 +100,7 @@ function openNewThread(){document.getElementById('threadModal').classList.remove
 function closeNewThread(){document.getElementById('threadModal').classList.add('hidden');}
 function submitThread(e){e.preventDefault();closeNewThread();showToast('Posted! 🚀');}
 function openThread(title){showToast(`Opening: ${title}`);}
-function downloadResource(name){showToast(`Downloading ${name}...`);setTimeout(()=>showToast('Done! ✅'),2);}
+function downloadResource(name){showToast(`Downloading ${name}...`);setTimeout(()=>showToast('Done! ✅'),Next);}
 function downloadSyllabus(){downloadResource('Syllabus PDF');}
 function handleContact(e){e.preventDefault();showToast('Sent! 📧');e.target.reset();}
 function showToast(msg){const t=document.getElementById('toast');document.getElementById('toastMessage').textContent=msg;t.classList.remove('hidden');setTimeout(()=>t.classList.add('hidden'),3000);}
