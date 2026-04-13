@@ -107,5 +107,101 @@ function showToast(msg){const t=document.getElementById('toast');document.getEle
 document.addEventListener('DOMContentLoaded',()=>{updateProgress();loadQuiz();});
 window.onclick=(e)=>{if(e.target.id==='videoModal')closeVideo();if(e.target.id==='threadModal')closeNewThread();};
 </script>
+    <script>
+/* ==== QUIZ SYSTEM START ==== */
+const questions = [
+  {
+    question: "What is the brain of a robot called?",
+    options: ["Battery", "Controller/Microcontroller", "Wheel", "Sensor"],
+    answer: 1
+  },
+  {
+    question: "Which part acts like muscles?",
+    options: ["Sensor", "Controller", "Actuator", "Wire"],
+    answer: 2
+  },
+  {
+    question: "What do sensors do?",
+    options: ["Move robot", "Think", "Detect environment", "Charge battery"],
+    answer: 2
+  }
+];
+
+let currentQuestion = 0;
+let score = 0;
+
+function loadQuestion() {
+  const q = questions[currentQuestion];
+
+  document.getElementById("questionText").innerText = q.question;
+  document.getElementById("currentQ").innerText = currentQuestion + 1;
+  document.getElementById("totalQ").innerText = questions.length;
+
+  let optionsHTML = "";
+  q.options.forEach((opt, index) => {
+    optionsHTML += `
+      <button class="quiz-option w-full p-3 rounded-lg border"
+        onclick="checkAnswer(${index}, this)">
+        ${String.fromCharCode(65 + index)}. ${opt}
+      </button>
+    `;
+  });
+
+  document.getElementById("optionsContainer").innerHTML = optionsHTML;
+}
+
+function checkAnswer(selected, element) {
+  const correct = questions[currentQuestion].answer;
+  const buttons = document.querySelectorAll(".quiz-option");
+
+  buttons.forEach(btn => btn.disabled = true);
+
+  if (selected === correct) {
+    element.style.background = "green";
+    element.style.color = "white";
+    score++;
+    document.getElementById("score").innerText = score;
+  } else {
+    element.style.background = "red";
+    element.style.color = "white";
+
+    buttons[correct].style.background = "green";
+    buttons[correct].style.color = "white";
+  }
+
+  setTimeout(() => {
+    currentQuestion++;
+
+    if (currentQuestion < questions.length) {
+      loadQuestion();
+    } else {
+      showResult();
+    }
+  }, 1000);
+}
+
+function showResult() {
+  document.getElementById("quizContent").style.display = "none";
+  document.getElementById("quizResult").style.display = "block";
+
+  document.getElementById("finalScore").innerText = score;
+  document.getElementById("totalScore").innerText = questions.length;
+}
+
+function restartQuiz() {
+  currentQuestion = 0;
+  score = 0;
+
+  document.getElementById("score").innerText = 0;
+
+  document.getElementById("quizContent").style.display = "block";
+  document.getElementById("quizResult").style.display = "none";
+
+  loadQuestion();
+}
+
+window.onload = loadQuestion;
+/* ==== QUIZ SYSTEM END ==== */
+</script>
 </body>
 </html>
