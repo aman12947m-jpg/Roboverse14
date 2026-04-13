@@ -84,7 +84,7 @@ function checkAnswer(selected){
 const correct=quizData[currentQuestion].correct;
 document.querySelectorAll('.quiz-option').forEach((btn,idx)=>{btn.disabled=true;btn.classList.add(idx===correct?'quiz-correct':idx===selected?'quiz-wrong':'');});
 if(selected===correct)quizScore++;
-setTimeout(()=>{currentQuestion++;currentQuestion<quizData.length?loadQuiz():showQuizResult();},1500);
+setTimeout(()=>{currentQuestion++;currentQuestion<quizData.length?loadQuiz():showQuizResult();},500);
 }
 function showQuizResult(){
 document.getElementById('quizContent').classList.add('hidden');
